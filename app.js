@@ -20,7 +20,10 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //setting up a basic route so we can render some information on the page 
-app.get("/", (req, res) => res.send("Bye Void"));
+app.get("/", (req, res) =>  {
+  console.log(res);
+  res.send("Bye Void");
+});
 
 
 //now we need to tell the app which port to run on 
