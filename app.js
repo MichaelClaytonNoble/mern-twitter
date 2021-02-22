@@ -1,16 +1,24 @@
 const mongoose = require('mongoose');
 
+const bodyParser = require('body-parser');
 
 //creating a new express server 
 const express = require("express");
+
+const users = require("./routes/api/users");
+const tweets = require("./routes/api/tweets");
+
 const app = express();
 const db = require('./config/keys').mongoURI;
 
-mongoose
-  .connect(db, { useNewUrlParser: true })
-  .then(() => console.log("Connected to MongoDB successfully"))
-  .catch(err => console.log(err));
 
+mongoose
+.connect(db, { useNewUrlParser: true })
+.then(() => console.log("Connected to MongoDB successfully"))
+.catch(err => console.log(err));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 //setting up a basic route so we can render some information on the page 
 app.get("/", (req, res) => res.send("Bye Void"));
 
@@ -30,6 +38,9 @@ app.listen(port, () => console.log(`Server is running on port ${port}`));
 
 //running node app you should see Hello World! on the browser 
 
+
+app.use("/api/users", users);
+app.use("/api/tweets", tweets);
 
 //nodemon 
 //use nodemon to watch for changes and update the page 
