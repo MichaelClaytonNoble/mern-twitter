@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const passport = require('passport');
+
 
 const bodyParser = require('body-parser');
 
@@ -17,13 +19,16 @@ mongoose
 .then(() => console.log("Connected to MongoDB successfully"))
 .catch(err => console.log(err));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 //setting up a basic route so we can render some information on the page 
 app.get("/", (req, res) =>  {
   console.log(res);
-  res.send("Bye Void");
 });
+app.use(passport.initialize());
+require('./config/passport')(passport);
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 //now we need to tell the app which port to run on 
